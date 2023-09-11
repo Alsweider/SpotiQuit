@@ -1,0 +1,2 @@
+# SpotiQuit
+Quick Spotify restart
