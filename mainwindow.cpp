@@ -44,13 +44,13 @@ void MainWindow::on_pushButton_clicked()
 
     HWND spotifyWindow = NULL;
     int timeout = 0;
-    while (timeout < 30) {  // Maximal 30 Sekunden warten
-        Sleep(1000);
+    while (timeout < 30) {
+        Sleep(200);
         spotifyWindow = FindWindow(NULL, L"Spotify");
         if (spotifyWindow != NULL) {
             ui->label->setText("Spotify found!");
              repaint();
-            Sleep(200);
+            Sleep(500);
             break;  // Fenster gefunden, abbrechen
         }
         timeout++;
@@ -65,7 +65,7 @@ void MainWindow::on_pushButton_clicked()
         Sleep(100);
         ui->label->setText("Starting music");
         repaint();
-        Sleep(200);
+        Sleep(500);
         keybd_event(VK_SPACE, 0, 0, 0); // Keydown
         Sleep(100);
         keybd_event(VK_SPACE, 0, KEYEVENTF_KEYUP, 0); // Keyup
