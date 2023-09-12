@@ -11,10 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.0.1</string>
+   <string>SpotiQuit 0.0.2</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="pda"/>
+   <iconset theme="pda">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(15, 37, 35);</string>
