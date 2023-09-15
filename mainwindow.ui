@@ -7,11 +7,11 @@
     <x>0</x>
     <y>0</y>
     <width>250</width>
-    <height>100</height>
+    <height>201</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.0.2</string>
+   <string>SpotiQuit 0.1.0</string>
   </property>
   <property name="windowIcon">
    <iconset theme="pda">
@@ -38,6 +38,9 @@
           <height>30</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Restart Spotify and resume playback</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(225, 225, 225);
 font: 12pt &quot;Times New Roman&quot;;
@@ -53,6 +56,9 @@ font: 12pt &quot;Times New Roman&quot;;
       </item>
       <item>
        <widget class="QLabel" name="label">
+        <property name="toolTip">
+         <string>Current status</string>
+        </property>
         <property name="styleSheet">
          <string notr="true">color: rgb(216, 184, 49);
 font: 700 11pt &quot;Arial&quot;;
@@ -68,9 +74,86 @@ font: 700 11pt &quot;Arial&quot;;
       </item>
      </layout>
     </item>
+    <item row="1" column="0">
+     <widget class="QGroupBox" name="groupBox">
+      <property name="toolTip">
+       <string>Choose the button that will be used to resume playback.</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+      </property>
+      <property name="title">
+       <string>Play key</string>
+      </property>
+      <widget class="QWidget" name="">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>161</width>
+         <height>50</height>
+        </rect>
+       </property>
+       <layout class="QFormLayout" name="formLayout_2">
+        <item row="1" column="0">
+         <widget class="QRadioButton" name="radioButton">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Play / Pause Media Key</string>
+          </property>
+          <property name="checked">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QRadioButton" name="radioButton_2">
+          <property name="styleSheet">
+           <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Spacebar</string>
+          </property>
+          <property name="checked">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item row="2" column="0">
+     <widget class="QCheckBox" name="checkBox">
+      <property name="toolTip">
+       <string>Minimises the Spotify window after resuming playback.</string>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Minimise</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>pushButton</tabstop>
+  <tabstop>radioButton_2</tabstop>
+  <tabstop>radioButton</tabstop>
+  <tabstop>checkBox</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>
