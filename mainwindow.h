@@ -4,6 +4,9 @@
 #include <QMainWindow>
 #include <cstdlib>
 #include <windows.h>
+#include <QProcess>
+#include <QStandardPaths>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,6 +20,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
 private slots:
     void on_pushButton_clicked();
 
@@ -28,7 +32,14 @@ private slots:
 
     void on_playPauseButton_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_pushButton_5_clicked();
+
 private:
     Ui::MainWindow *ui;
+    bool IsSpotifyOpen();
+    void pfadSetzen();
+
 };
 #endif // MAINWINDOW_H
