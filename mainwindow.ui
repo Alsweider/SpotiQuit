@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>277</width>
+    <width>301</width>
     <height>300</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.3.0</string>
+   <string>SpotiQuit 0.4.0</string>
   </property>
   <property name="windowIcon">
    <iconset theme="pda">
@@ -54,9 +54,6 @@ font: 12pt &quot;Times New Roman&quot;;
         </property>
         <property name="text">
          <string>Restart Spotify!</string>
-        </property>
-        <property name="shortcut">
-         <string>Ctrl+R</string>
         </property>
        </widget>
       </item>

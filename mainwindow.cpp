@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Setze Standardpfad zu Spotify.exe in Textfeld
     pfadSetzen();
+
 }
 
 MainWindow::~MainWindow()
@@ -31,7 +32,6 @@ void MainWindow::on_pushButton_clicked()
         // Spotify.exe beenden
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Closing Spotify";
         ui->label->setText("Closing Spotify");
-        Sleep(pauseTime);
         system("taskkill /f /im Spotify.exe");
         Sleep(pauseTime);
      }
@@ -56,7 +56,12 @@ void MainWindow::on_pushButton_clicked()
             qDebug() << "Spotify in den Vordergrund geholt.";
             ui->label->setText("Spotify active");
 
+            //Pause verhindert, dass auf Abspielen gedrückt wird,
+            //bevor das Fenster im Vordergrund ist.
+            Sleep(pauseTime);
+
             if (ui->resumePlaybackCheckBox->isChecked()){
+
 
             if (ui->radioButton->isChecked()){
                 //Medientaste play/pause
@@ -92,7 +97,7 @@ void MainWindow::on_pushButton_clicked()
             repaint();
             qDebug() << "Spotify-Fenster nicht im Vordergrund. " << startversuch;
             Sleep(50);
-            if (startversuch == 400){
+            if (startversuch == 400 && GetForegroundWindow() != spotifyWindow){
             ui->label->setText("Spotify not found");
             }
         }
@@ -202,3 +207,41 @@ void MainWindow::on_pushButton_5_clicked()
         pfadSetzen();
 }
 
+//Tastenkürzel bauen
+void MainWindow::showEvent(QShowEvent* event)
+{
+        QMainWindow::showEvent(event);
+
+        //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
+        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
+
+        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
+
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+        //Kürzel wieder entfernen.
+        //Bitte verlassen Sie diesen Raum so, wie Sie ihn vorzufinden wünschen.
+        UnregisterHotKey(reinterpret_cast<HWND>(this->winId()), 1);
+        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel entfernt.";
+        QMainWindow::closeEvent(event);
+}
+
+bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long long* result)
+{
+        qDebug() << "nativeEvent aufgerufen";
+
+        Q_UNUSED(eventType);
+
+        // Reaktion auf Kürzel
+        MSG* msg = static_cast<MSG*>(message);
+        if (msg->message == WM_HOTKEY && msg->wParam == 1)
+        {
+            qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel gedrückt.";
+            // Kürzel wurde gedrückt, rufe Funktion auf
+            on_pushButton_clicked();
+        }
+
+        return false;
+}
