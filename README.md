@@ -9,7 +9,9 @@ Tool to quickly restart Spotify and resume playing music.
 
 # How-to
 
-"its not even an RPG at all! i mean look at it! in what way is this supposed to be an RPG if you can do quests and stuff? all you do is press one butten the entier time!" ([Axman13](https://youtu.be/4Z2Z23SAFVA))
+- Use the button on top to restart Spotify and resume playback. You can also use the keyboard shortcut "Ctrl + Alt + S" to achieve the same, as long as the programme is open or minimised.
+- If Spotify doesn't resume playback: increase the delay value, e.g. to 150 or 200 ms.
+- "its not even an RPG at all! i mean look at it! in what way is this supposed to be an RPG if you can do quests and stuff? all you do is press one butten the entier time!" ([Axman13](https://youtu.be/4Z2Z23SAFVA))
 
 # Virus Protection
 
