@@ -3,7 +3,7 @@ Tool to quickly restart Spotify and resume playing music.
 
 [Download latest release](https://github.com/Alsweider/SpotiQuit/releases/latest)
 
-![2023-09-20 09_18_55-SpotiQuit 0 3 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/33e12e13-0db9-467d-ad5f-10ef913472f1)
+![2023-09-27 15_51_58-SpotiQuit 0 4 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/eb7af21b-de44-47e4-ae4c-61ff26097c49)
 
 
 
