@@ -2,6 +2,8 @@
 #include "ui_mainwindow.h"
 #include <QTime>
 #include <QFileDialog>
+#include <QSettings>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -11,6 +13,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     //Setze Standardpfad zu Spotify.exe in Textfeld
     pfadSetzen();
+
+    //Gespeicherte Einstellungen wiederherstellen
+    loadSettings();
 
 }
 
@@ -53,13 +58,10 @@ void MainWindow::on_pushButton_clicked()
 
             //Erfolgsprüfung von taskkill
             while (IsSpotifyOpen()){
-
-             Sleep(20);
-             qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Waiting for Spotify to quit forcefully";
+                Sleep(20);
+                qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Waiting for Spotify to quit forcefully";
             }
         }
-
-
 
      }
 
@@ -100,7 +102,6 @@ void MainWindow::on_pushButton_clicked()
             Sleep(pauseTime);
 
             if (ui->resumePlaybackCheckBox->isChecked()){
-
 
             if (ui->radioButton->isChecked()){
                 //Medientaste play/pause
@@ -255,11 +256,9 @@ void MainWindow::showEvent(QShowEvent* event)
         int modifier2 = MOD_ALT;
         int hotkey = 'S';
 
-
         //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
         //RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
         RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
-
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
 
 }
@@ -290,3 +289,124 @@ bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long lo
 
         return false;
 }
+
+//Die Funktion zum Speichern der Einstellungen
+void MainWindow::saveSettings() {
+        //Pfad zur neuen .ini-Datei festlegen
+        QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+
+        // Checkbox-Einstellungen speichern
+        settings.setValue("checkBoxGentleClosing", ui->checkBoxGentleClosing->isChecked());
+        settings.setValue("resumePlaybackCheckBox", ui->resumePlaybackCheckBox->isChecked());
+        settings.setValue("checkBox", ui->checkBox->isChecked());
+
+        // Radio-Button-Einstellungen speichern
+        settings.setValue("radioButton", ui->radioButton->isChecked());
+        settings.setValue("radioButton_2", ui->radioButton_2->isChecked());
+
+        // Eingabefeld-Einstellungen speichern
+        settings.setValue("lineEdit", ui->lineEdit->text());
+
+        // Wert der spinBox speichern
+        settings.setValue("spinBoxValue", ui->spinBox->value());
+}
+
+// Einstellungen laden
+void MainWindow::loadSettings() {
+        QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+
+
+        // Checkbox-Einstellungen wiederherstellen
+        ui->checkBoxGentleClosing->setChecked(settings.value("checkBoxGentleClosing", false).toBool());
+
+        // Überprüfen, ob die Einstellung für resumePlaybackCheckBox existiert
+        if (settings.contains("resumePlaybackCheckBox")) {
+            ui->resumePlaybackCheckBox->setChecked(settings.value("resumePlaybackCheckBox").toBool());
+
+            //Radioknöpfe entsprechend der Checkbox regulieren
+            if (ui->resumePlaybackCheckBox->isChecked()){
+            ui->radioButton->setEnabled(true);
+            ui->radioButton_2->setEnabled(true);
+            } else {
+            ui->radioButton->setEnabled(false);
+            ui->radioButton_2->setEnabled(false);
+            }
+
+        } else {
+            // Wenn die Einstellung für resumePlaybackCheckBox nicht existiert, Checkbox auf checked setzen
+            ui->resumePlaybackCheckBox->setChecked(true); // Hier wird die Checkbox standardmäßig aktiviert
+            ui->radioButton->setEnabled(true);
+            ui->radioButton_2->setEnabled(true);
+            ui->radioButton_2->setChecked(true);
+        }
+
+        //Überprüfung der checkBox zum Minimieren
+        if (settings.contains("checkBox")){
+            ui->checkBox->setChecked(settings.value("checkBox").toBool());
+        } else{
+            //Wenn checkBox nicht in den Einstellungen ist, Standardwert setzen
+            ui->checkBox->setChecked(true);
+        }
+
+        // Radio-Button-Einstellungen wiederherstellen
+        ui->radioButton->setChecked(settings.value("radioButton", false).toBool());
+        ui->radioButton_2->setChecked(settings.value("radioButton_2", false).toBool());
+
+        // Eingabefeld-Einstellungen wiederherstellen
+        QString lineEditText = settings.value("lineEdit", "").toString();
+        if (!lineEditText.isEmpty()) {
+            ui->lineEdit->setText(lineEditText);
+        } else {
+            // Wenn der Text in den Einstellungen nicht gefunden wurde, Standardpfad setzen
+            pfadSetzen();
+        }
+
+        // Wert der spinBox wiederherstellen
+        int spinBoxValue = settings.value("spinBoxValue", -1).toInt();
+        if (spinBoxValue != -1) {
+            ui->spinBox->setValue(spinBoxValue);
+        } else {
+            // Wenn der Wert nicht in den Einstellungen gespeichert ist, Standardwert setzen
+            ui->spinBox->setValue(100);
+        }
+}
+
+void MainWindow::on_pushButtonSaveSettings_clicked()
+{
+        saveSettings();
+        ui->label->setText("Settings saved");
+        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Settings saved";
+        // Pfad zur INI-Datei abrufen
+        QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+        QString iniFilePath = settings.fileName(); // Dies gibt den vollständigen Pfad zur INI-Datei zurück
+
+        //Aufspringfenster zeigt ehrenhaft den Pfad zur Einstellungsdatei an.
+        QMessageBox msgBox;
+        msgBox.setWindowTitle("Settings location");
+        msgBox.setText("The settings file is located at:\n" + iniFilePath);
+        msgBox.setStyleSheet("QLabel { color: rgb(216, 184, 49); font: 700 9pt Arial; }"
+                             "QMessageBox {setStandardButtons(QMessageBox::Ok); }"
+                             "QMessageBox {setDefaultButton(QMessageBox::Ok); }"
+                             );
+
+        //Kopierbaren Pfad als Text beifügen
+        msgBox.setDetailedText(iniFilePath);
+        msgBox.exec();
+}
+
+//Das bleibt alles so, wies hier ist und da wird sich hier nichts dran rütteln,
+//egal ob du hier bist und nich!
+void MainWindow::on_pushButtonReset_clicked()
+{
+        ui->resumePlaybackCheckBox->setChecked(true);
+        ui->radioButton->setEnabled(true);
+        ui->radioButton_2->setEnabled(true);
+        ui->radioButton_2->setChecked(true);
+        ui->radioButton->setChecked(false);
+        ui->checkBoxGentleClosing->setChecked(false);
+        ui->checkBox->setChecked(true);
+        ui->spinBox->setValue(100);
+        pfadSetzen();
+        ui->label->setText("Settings reset");
+}
+
