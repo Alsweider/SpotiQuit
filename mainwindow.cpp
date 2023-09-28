@@ -32,8 +32,35 @@ void MainWindow::on_pushButton_clicked()
         // Spotify.exe beenden
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Closing Spotify";
         ui->label->setText("Closing Spotify");
-        system("taskkill /f /im Spotify.exe");
-        Sleep(pauseTime);
+
+        if (ui->checkBoxGentleClosing->isChecked()){
+                system("taskkill /im Spotify.exe");
+
+            ui->label->setText("Waiting for quit...");
+            repaint();
+
+            //Erfolgsprüfung von taskkill
+            while (IsSpotifyOpen()){
+                Sleep(20);
+                qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Waiting for Spotify to quit gently";
+                }
+
+        } else {
+            system("taskkill /t /f /im Spotify.exe");
+
+                ui->label->setText("Waiting for quit...");
+                repaint();
+
+            //Erfolgsprüfung von taskkill
+            while (IsSpotifyOpen()){
+
+             Sleep(20);
+             qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Waiting for Spotify to quit forcefully";
+            }
+        }
+
+
+
      }
 
      //Wenn Spotify geschlossen ist, Spotify öffnen
@@ -44,7 +71,20 @@ void MainWindow::on_pushButton_clicked()
         std::string spotifyExePathStdString = spotifyExePath.toStdString();
         std::string startCommand = "start " + spotifyExePathStdString;
         system(startCommand.c_str()); // startCommand als Befehl
+
+        ui->label->setText("Waiting for start...");
+        repaint();
+
+        //Erfolgskontrolle Öffnen
+        while (!IsSpotifyOpen()){
+            Sleep(20);
+            qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Waiting for Spotify to start";
+        }
+
      }
+
+    //Pause verhindert vorzeitige Tastenaktion
+    // Sleep(pauseTime);
 
      //Nun mal schauen, ob wir das Fenster erhaschen können...
 
@@ -56,8 +96,7 @@ void MainWindow::on_pushButton_clicked()
             qDebug() << "Spotify in den Vordergrund geholt.";
             ui->label->setText("Spotify active");
 
-            //Pause verhindert, dass auf Abspielen gedrückt wird,
-            //bevor das Fenster im Vordergrund ist.
+            //Pause verhindert vorzeitige Tastenaktion
             Sleep(pauseTime);
 
             if (ui->resumePlaybackCheckBox->isChecked()){
@@ -212,8 +251,14 @@ void MainWindow::showEvent(QShowEvent* event)
 {
         QMainWindow::showEvent(event);
 
+        int modifier1 = MOD_CONTROL;
+        int modifier2 = MOD_ALT;
+        int hotkey = 'S';
+
+
         //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
-        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
+        //RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
+        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
 
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
 

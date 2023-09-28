@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>301</width>
-    <height>300</height>
+    <width>256</width>
+    <height>298</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.4.0</string>
+   <string>SpotiQuit 0.5.0</string>
   </property>
   <property name="windowIcon">
    <iconset theme="pda">
@@ -45,7 +45,7 @@
          </size>
         </property>
         <property name="toolTip">
-         <string>Restart Spotify and resume playback</string>
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Restart Spotify and resume playback.&lt;br/&gt;Shortcut when in foreground: Ctrl+R&lt;br/&gt;Global shortcut: Ctrl+Alt+S&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
         </property>
         <property name="styleSheet">
          <string notr="true">background-color: rgb(225, 225, 225);
@@ -54,6 +54,9 @@ font: 12pt &quot;Times New Roman&quot;;
         </property>
         <property name="text">
          <string>Restart Spotify!</string>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+R</string>
         </property>
        </widget>
       </item>
@@ -157,36 +160,6 @@ font: 700 9pt &quot;Arial&quot;;</string>
        <string>Settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
-       <item row="0" column="0">
-        <widget class="QCheckBox" name="resumePlaybackCheckBox">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Continue playing music after Spotify restarts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Continue playback after restart</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="radioButton_2">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the button to start playback.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Use Spacebar to play</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
        <item row="2" column="0">
         <widget class="QRadioButton" name="radioButton">
          <property name="toolTip">
@@ -204,24 +177,7 @@ font: 700 9pt &quot;Arial&quot;;</string>
          </property>
         </widget>
        </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="toolTip">
-          <string>Minimises the Spotify window after resuming playback.</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Minimise window after restart</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
+       <item row="5" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QSpinBox" name="spinBox">
@@ -272,7 +228,24 @@ font: 700 9pt &quot;Arial&quot;;</string>
          </item>
         </layout>
        </item>
-       <item row="5" column="0">
+       <item row="1" column="0">
+        <widget class="QRadioButton" name="radioButton_2">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the button to start playback.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Use Spacebar to play</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
           <widget class="QPushButton" name="pushButton_4">
@@ -320,6 +293,46 @@ font: 700 9pt &quot;Arial&quot;;</string>
           </widget>
          </item>
         </layout>
+       </item>
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="toolTip">
+          <string>Minimises the Spotify window after resuming playback.</string>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+         </property>
+         <property name="text">
+          <string>Minimise window after restart</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QCheckBox" name="resumePlaybackCheckBox">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Continue playing music after Spotify restarts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Continue playback after restart</string>
+         </property>
+         <property name="checked">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QCheckBox" name="checkBoxGentleClosing">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The option for soft people. Maintains playback progress and volume and ensures that the tray icons are tidy - at the expense of time. Technically, it uses taskkill without the /f (force) parameter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Gentle closing (slow)</string>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
