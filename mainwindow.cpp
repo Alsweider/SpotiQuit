@@ -9,6 +9,7 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
+
     ui->setupUi(this);
 
     //Setze Standardpfad zu Spotify.exe in Textfeld
@@ -17,6 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     //Gespeicherte Einstellungen wiederherstellen
     loadSettings();
 
+    //Minimieren bei Programmstart?
+    if (ui->checkBoxStartMinimised->isChecked()){
+        showMinimized();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -84,9 +89,6 @@ void MainWindow::on_pushButton_clicked()
         }
 
      }
-
-    //Pause verhindert vorzeitige Tastenaktion
-    // Sleep(pauseTime);
 
      //Nun mal schauen, ob wir das Fenster erhaschen können...
 
@@ -180,7 +182,6 @@ void MainWindow::on_resumePlaybackCheckBox_clicked()
     }
 }
 
-
 //Pfadauswahl
 void MainWindow::on_pushButton_4_clicked()
 {
@@ -206,7 +207,6 @@ void MainWindow::on_pushButton_4_clicked()
         }
 }
 
-
 //Prüfung ob die Taskliste Spotify.exe enthält
 bool MainWindow::IsSpotifyOpen() {
         QProcess process;
@@ -215,7 +215,6 @@ bool MainWindow::IsSpotifyOpen() {
         QString taskListOutput = process.readAllStandardOutput();
         return taskListOutput.contains("Spotify.exe");
 }
-
 
 //Setze Standardpfad zu Spotify.exe in Textfeld
 void MainWindow::pfadSetzen(){
@@ -239,7 +238,6 @@ void MainWindow::pfadSetzen(){
         ui->lineEdit->setText(spotifyExePath);
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Path set: " << spotifyExePath;
 }
-
 
 //Pfad zurücksetzen
 void MainWindow::on_pushButton_5_clicked()
@@ -274,7 +272,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long long* result)
 {
-        qDebug() << "nativeEvent aufgerufen";
+        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - nativeEvent aufgerufen";
 
         Q_UNUSED(eventType);
 
@@ -295,20 +293,26 @@ void MainWindow::saveSettings() {
         //Pfad zur neuen .ini-Datei festlegen
         QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
 
-        // Checkbox-Einstellungen speichern
+        //Checkbox-Einstellungen speichern
         settings.setValue("checkBoxGentleClosing", ui->checkBoxGentleClosing->isChecked());
         settings.setValue("resumePlaybackCheckBox", ui->resumePlaybackCheckBox->isChecked());
         settings.setValue("checkBox", ui->checkBox->isChecked());
 
-        // Radio-Button-Einstellungen speichern
+        //Radio-Button-Einstellungen speichern
         settings.setValue("radioButton", ui->radioButton->isChecked());
         settings.setValue("radioButton_2", ui->radioButton_2->isChecked());
 
-        // Eingabefeld-Einstellungen speichern
+        //Eingabefeld-Einstellungen speichern
         settings.setValue("lineEdit", ui->lineEdit->text());
 
-        // Wert der spinBox speichern
+        //Wert der spinBox speichern
         settings.setValue("spinBoxValue", ui->spinBox->value());
+
+        //Autostart speichern
+        settings.setValue("checkBoxAutostart", ui->checkBoxAutostart->isChecked());
+
+        //Minimieren speichern
+        settings.setValue("checkBoxStartMinimised", ui->checkBoxStartMinimised->isChecked());
 }
 
 // Einstellungen laden
@@ -316,10 +320,10 @@ void MainWindow::loadSettings() {
         QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
 
 
-        // Checkbox-Einstellungen wiederherstellen
+        //Checkbox zum sanften Schließen wiederherstellen
         ui->checkBoxGentleClosing->setChecked(settings.value("checkBoxGentleClosing", false).toBool());
 
-        // Überprüfen, ob die Einstellung für resumePlaybackCheckBox existiert
+        //Überprüfen, ob die Einstellung für resumePlaybackCheckBox existiert
         if (settings.contains("resumePlaybackCheckBox")) {
             ui->resumePlaybackCheckBox->setChecked(settings.value("resumePlaybackCheckBox").toBool());
 
@@ -333,8 +337,8 @@ void MainWindow::loadSettings() {
             }
 
         } else {
-            // Wenn die Einstellung für resumePlaybackCheckBox nicht existiert, Checkbox auf checked setzen
-            ui->resumePlaybackCheckBox->setChecked(true); // Hier wird die Checkbox standardmäßig aktiviert
+            //Wenn die Einstellung für resumePlaybackCheckBox nicht existiert, Checkbox auf checked setzen
+            ui->resumePlaybackCheckBox->setChecked(true);
             ui->radioButton->setEnabled(true);
             ui->radioButton_2->setEnabled(true);
             ui->radioButton_2->setChecked(true);
@@ -348,11 +352,11 @@ void MainWindow::loadSettings() {
             ui->checkBox->setChecked(true);
         }
 
-        // Radio-Button-Einstellungen wiederherstellen
+        //Radio-Button-Einstellungen wiederherstellen
         ui->radioButton->setChecked(settings.value("radioButton", false).toBool());
         ui->radioButton_2->setChecked(settings.value("radioButton_2", false).toBool());
 
-        // Eingabefeld-Einstellungen wiederherstellen
+        //Spotify-Pfad wiederherstellen
         QString lineEditText = settings.value("lineEdit", "").toString();
         if (!lineEditText.isEmpty()) {
             ui->lineEdit->setText(lineEditText);
@@ -369,6 +373,22 @@ void MainWindow::loadSettings() {
             // Wenn der Wert nicht in den Einstellungen gespeichert ist, Standardwert setzen
             ui->spinBox->setValue(100);
         }
+
+        //Autostart laden
+        if (settings.contains("checkBoxAutostart")){
+            ui->checkBoxAutostart->setChecked(settings.value("checkBoxAutostart").toBool());
+        } else{
+            //Wenn checkBoxAutostart nicht in den Einstellungen ist, Standardwert setzen
+            ui->checkBoxAutostart->setChecked(false);
+        }
+
+        //Minimieren laden
+        if (settings.contains("checkBoxStartMinimised")){
+            ui->checkBoxStartMinimised->setChecked(settings.value("checkBoxStartMinimised").toBool());
+        } else{
+            ui->checkBoxStartMinimised->setChecked(false);
+        }
+
 }
 
 void MainWindow::on_pushButtonSaveSettings_clicked()
@@ -408,5 +428,58 @@ void MainWindow::on_pushButtonReset_clicked()
         ui->spinBox->setValue(100);
         pfadSetzen();
         ui->label->setText("Settings reset");
+        ui->checkBoxAutostart->setChecked(false);
+        ui->checkBoxStartMinimised->setChecked(false);
+}
+
+//Der Autostart-Schalter
+void MainWindow::on_checkBoxAutostart_stateChanged(int arg1)
+{
+        //Wir speichern den Autostart-Wert automatisch in den Einstellungen, weil: wer denkt da schon dran?
+        QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+        settings.setValue("checkBoxAutostart", ui->checkBoxAutostart->isChecked());
+
+        //Je nach Wert der Checkbox wird der Autostart-Pfad in die Registry gesetzt / entfernt
+        if (ui->checkBoxAutostart->isChecked()){
+             addToAutostart();
+        } else {
+             removeFromAutostart();
+        }
+
+}
+
+//Funktion zum Hinzufügen des Programms zum Autostart
+void MainWindow::addToAutostart() {
+        QString programPath = QCoreApplication::applicationFilePath();
+        QString appName = QCoreApplication::applicationName();
+
+        //Den Pfad mit korrekten Schrägstrichen formatieren
+        programPath = QDir::toNativeSeparators(programPath);
+
+        //Autostart-Pfad festlegen
+        QString regPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+
+        //Autostart-Eintrag setzen
+        QSettings settings(regPath, QSettings::NativeFormat);
+        settings.setValue(appName, programPath);
+}
+
+//Funktion zum Entfernen des Programms aus dem Autostart
+void MainWindow::removeFromAutostart() {
+        QString appName = QCoreApplication::applicationName();
+
+        //Autostart-Pfad in der Registry festlegen
+        QString regPath = "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Run";
+
+        //Autostart-Eintrag aus der Registry entfernen
+        QSettings settings(regPath, QSettings::NativeFormat);
+        settings.remove(appName);
+}
+
+void MainWindow::on_checkBoxStartMinimised_stateChanged(int arg1)
+{
+        //Wir speichern den Wert automatisch in den Einstellungen, weil: wer denkt da schon dran?
+        QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+        settings.setValue("checkBoxStartMinimised", ui->checkBoxStartMinimised->isChecked());
 }
 

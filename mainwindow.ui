@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>275</width>
-    <height>354</height>
+    <height>380</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.6.0</string>
+   <string>SpotiQuit 0.7.0</string>
   </property>
   <property name="windowIcon">
    <iconset theme="pda">
@@ -157,7 +157,7 @@ font: 700 11pt &quot;Arial&quot;;
 font: 700 9pt &quot;Arial&quot;;</string>
       </property>
       <property name="title">
-       <string>Settings</string>
+       <string>Spotify settings</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="2" column="0">
@@ -310,6 +310,38 @@ font: 700 9pt &quot;Arial&quot;;</string>
      </widget>
     </item>
     <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QCheckBox" name="checkBoxAutostart">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start SpotiQuit automatically with Windows. (Could alert the virus scanner because a registry entry for autorun is created.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Autostart</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxStartMinimised">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimises SpotiQuit to the taskbar upon startup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Start minimised</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="3" column="0">
      <layout class="QHBoxLayout" name="horizontalLayout_4">
       <item>
        <widget class="QPushButton" name="pushButtonSaveSettings">

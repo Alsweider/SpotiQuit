@@ -7,7 +7,7 @@
 #include <QProcess>
 #include <QStandardPaths>
 #include <QMessageBox>
-#include <QClipboard>
+
 
 
 
@@ -33,6 +33,12 @@ public:
     void saveSettings();
     void loadSettings();
 
+    void addToAutostart();
+    void removeFromAutostart();
+
+
+
+
 
 private slots:
     void on_pushButton_clicked();
@@ -53,12 +59,14 @@ private slots:
 
     void on_pushButtonReset_clicked();
 
+    void on_checkBoxAutostart_stateChanged(int arg1);
+
+    void on_checkBoxStartMinimised_stateChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     bool IsSpotifyOpen();
     void pfadSetzen();
-
-
 
 };
 #endif // MAINWINDOW_H
