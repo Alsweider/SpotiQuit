@@ -5,7 +5,8 @@ There are times when the music doesn't want to play anymore, for whatever reason
 
 [Download latest release](https://github.com/Alsweider/SpotiQuit/releases/latest)
 
-![2023-09-29 13_32_27-SpotiQuit 0 7 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/2ccaf93c-1603-44f1-ae26-39704030f8ed)
+![2023-10-01 22_45_42-SpotiQuit 0 8 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/0de3c9c6-04f7-4376-9fb8-6d42cc4487ce)
+
 
 # How-to
 
@@ -19,7 +20,7 @@ Security software like [SmartScreen](https://www.pcworld.com/article/406832/how-
 
 # Support development
 
-If you would like to support my efforts, you can make a voluntary donation here. Even 1 € would help:
+If you would like to support my efforts, you can make a voluntary donation here. Even 1 DM would help:
   
 - Monero (XMR): 88o74DJuHyxNr8rFkbH2xaFKkN35jiUcS12htB13SNPVVrzA4zX4ruJj8AXURrR3ssMni8zeQZHAjV6aFYwNUZy8AwT5c8M
 
