@@ -24,5 +24,4 @@ If you would like to support my efforts, you can make a voluntary donation here.
 - Monero (XMR): 88o74DJuHyxNr8rFkbH2xaFKkN35jiUcS12htB13SNPVVrzA4zX4ruJj8AXURrR3ssMni8zeQZHAjV6aFYwNUZy8AwT5c8M
 
 ![Monero Software](https://github.com/Alsweider/SpotiQuit/assets/30653982/b98b5145-c5fb-425e-b729-4897362028a2)
-
 - [Patreon](https://patreon.com/alsweider)
