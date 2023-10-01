@@ -250,14 +250,17 @@ void MainWindow::showEvent(QShowEvent* event)
 {
         QMainWindow::showEvent(event);
 
-        int modifier1 = MOD_CONTROL;
-        int modifier2 = MOD_ALT;
-        int hotkey = 'S';
+//        modifier1 = MOD_CONTROL;
+//        modifier2 = MOD_ALT;
+//        hotkey = 'S';
 
-        //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
-        //RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
-        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
-        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
+//        //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
+//        //RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
+//        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
+//        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
+
+        //Kürzel auslesen & festlegen
+        setHotkey();
 
 }
 
@@ -313,6 +316,11 @@ void MainWindow::saveSettings() {
 
         //Minimieren speichern
         settings.setValue("checkBoxStartMinimised", ui->checkBoxStartMinimised->isChecked());
+
+        //Hotkey speichern
+        settings.setValue("comboBoxModifier_1", ui->comboBoxModifier_1->currentText());
+        settings.setValue("comboBoxModifier_2", ui->comboBoxModifier_2->currentText());
+        settings.setValue("lineEditHotkey", ui->lineEditHotkey->text());
 }
 
 // Einstellungen laden
@@ -389,6 +397,19 @@ void MainWindow::loadSettings() {
             ui->checkBoxStartMinimised->setChecked(false);
         }
 
+        //Hotkey laden
+        //Wenn Hotkey gespeichert ist, Werte laden
+        if (settings.contains("comboBoxModifier_1") && settings.contains("comboBoxModifier_2") && settings.contains("lineEditHotkey")){
+            ui->comboBoxModifier_1->setCurrentText(settings.value("comboBoxModifier_1").toString());
+            ui->comboBoxModifier_2->setCurrentText(settings.value("comboBoxModifier_2").toString());
+            ui->lineEditHotkey->setText(settings.value("lineEditHotkey").toString());
+            //Wenn kein Hotkey gespeichert ist, Standardwerte setzen
+        } else{
+            ui->comboBoxModifier_1->setCurrentText("Ctrl");
+             ui->comboBoxModifier_2->setCurrentText("Alt");
+            ui->lineEditHotkey->setText("S");
+        }
+
 }
 
 void MainWindow::on_pushButtonSaveSettings_clicked()
@@ -430,6 +451,11 @@ void MainWindow::on_pushButtonReset_clicked()
         ui->label->setText("Settings reset");
         ui->checkBoxAutostart->setChecked(false);
         ui->checkBoxStartMinimised->setChecked(false);
+        ui->comboBoxModifier_1->setCurrentText("Ctrl");
+        ui->comboBoxModifier_2->setCurrentText("Alt");
+        ui->lineEditHotkey->setText("S");
+
+
 }
 
 //Der Autostart-Schalter
@@ -481,5 +507,91 @@ void MainWindow::on_checkBoxStartMinimised_stateChanged(int arg1)
         //Wir speichern den Wert automatisch in den Einstellungen, weil: wer denkt da schon dran?
         QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
         settings.setValue("checkBoxStartMinimised", ui->checkBoxStartMinimised->isChecked());
+}
+
+//Holen wir uns den Kurzbefehl zum Spotify-Neustart
+void MainWindow::setHotkey(){
+        //ersten Modifier auslesen
+        if (ui->comboBoxModifier_1->currentText() == "Ctrl"){
+             modifier1 = MOD_CONTROL;
+        } else if (ui->comboBoxModifier_1->currentText() == "Alt"){
+             modifier1 = MOD_ALT;
+        } else {
+             modifier1 = 0;
+        }
+
+        //zwoten Modifier auslesen
+        if (ui->comboBoxModifier_2->currentText() == "Ctrl"){
+             modifier2 = MOD_CONTROL;
+        } else if (ui->comboBoxModifier_2->currentText() == "Alt"){
+             modifier2 = MOD_ALT;
+        } else {
+             modifier2 = 0;
+        }
+
+        //Hotkey-Feld auslesen
+        //Den ersten Buchstaben der Hotkey-Eingabezeile als Charakter speichern
+        QString text = ui->lineEditHotkey->text();
+        if (!text.isEmpty()) {
+             QChar firstChar = text.at(0).toUpper(); //Konvertiert den Buchstaben in Char-Großbuchstaben
+             hotkey = firstChar.toLatin1();  //QChar zu Integer zwecks Hotkeyregistrierung
+             qDebug() << "Hotkey erfolgreich extrahiert: " << hotkey;
+        } else {
+             hotkey = 0;
+             qDebug() << "Das QLineEdit ist leer. Kein Buchstabe zum Extrahieren.";
+        }
+
+        //Hotkey basteln
+        //Kürzel für den Spotify-Neustart global in Windows registrieren
+        //Wenn beide Modifier und der Hotkey vorhanden sind
+        if (modifier1 != 0 && modifier2 != 0 && hotkey != 0 ){
+             RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
+             qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << modifier2 << " + " << hotkey;
+             ui->label->setText("Hotkey set");
+        }
+
+        //Wenn nur der erste Modifier und der Hotkey vorhanden sind
+        if (modifier1 != 0 && modifier2 == 0 && hotkey != 0){
+             RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 , hotkey);
+             qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << hotkey;
+             ui->label->setText("Hotkey set");
+        }
+
+        //Wenn nur der zwote Modifier und der Hotkey vorhanden sind
+        if (modifier1 == 0 && modifier2 != 0 && hotkey != 0){
+        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier2 , hotkey);
+        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << hotkey;
+        ui->label->setText("Hotkey set");
+        }
+
+        //Wenn nichts da ist
+        if (modifier1 == 0 && modifier2 == 0 && hotkey == 0 ){
+            ui->label->setText("Missing key");
+            repaint();
+        }
+
+}
+
+void MainWindow::on_lineEditHotkey_textChanged(const QString &text)
+{
+        //Überprüfen, ob der Text länger als ein Zeichen ist
+        if (text.length() > 1) {
+             //Falls ja, begrenzen auf den ersten Buchstaben
+             ui->lineEditHotkey->setText(text.at(0));
+        }
+
+        //Hotkey zusammenstückeln
+        setHotkey();
+}
+
+void MainWindow::on_comboBoxModifier_1_currentTextChanged(const QString &arg1)
+{
+    setHotkey();
+}
+
+
+void MainWindow::on_comboBoxModifier_2_currentTextChanged(const QString &arg1)
+{
+    setHotkey();
 }
 

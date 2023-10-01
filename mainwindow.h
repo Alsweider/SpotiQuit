@@ -36,10 +36,6 @@ public:
     void addToAutostart();
     void removeFromAutostart();
 
-
-
-
-
 private slots:
     void on_pushButton_clicked();
 
@@ -63,10 +59,20 @@ private slots:
 
     void on_checkBoxStartMinimised_stateChanged(int arg1);
 
+    void on_lineEditHotkey_textChanged(const QString &arg1);
+
+    void on_comboBoxModifier_1_currentTextChanged(const QString &arg1);
+
+    void on_comboBoxModifier_2_currentTextChanged(const QString &arg1);
+
 private:
     Ui::MainWindow *ui;
     bool IsSpotifyOpen();
     void pfadSetzen();
+    void setHotkey();
+
+    //Hotkey-Variablen
+    int modifier1, modifier2, hotkey;
 
 };
 #endif // MAINWINDOW_H

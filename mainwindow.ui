@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>275</width>
-    <height>380</height>
+    <width>293</width>
+    <height>469</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.7.0</string>
+   <string>SpotiQuit 0.8.0</string>
   </property>
   <property name="windowIcon">
    <iconset theme="pda">
@@ -27,10 +27,10 @@
    <string notr="true">background-color: rgb(15, 37, 35);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout">
+   <layout class="QGridLayout" name="gridLayout_6">
     <item row="0" column="0">
-     <layout class="QVBoxLayout" name="verticalLayout">
-      <item>
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
        <widget class="QPushButton" name="pushButton">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
@@ -60,7 +60,7 @@ font: 12pt &quot;Times New Roman&quot;;
         </property>
        </widget>
       </item>
-      <item>
+      <item row="1" column="0">
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
          <widget class="QPushButton" name="pushButton_2">
@@ -109,7 +109,7 @@ font: 12pt &quot;Times New Roman&quot;;
         </item>
        </layout>
       </item>
-      <item>
+      <item row="2" column="0">
        <widget class="QLabel" name="label">
         <property name="sizePolicy">
          <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
@@ -159,152 +159,276 @@ font: 700 9pt &quot;Arial&quot;;</string>
       <property name="title">
        <string>Spotify settings</string>
       </property>
-      <layout class="QGridLayout" name="gridLayout_2">
-       <item row="2" column="0">
-        <widget class="QRadioButton" name="radioButton">
-         <property name="toolTip">
-          <string>Select the button to start playback.</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Use Media Key to play</string>
-         </property>
-         <property name="checked">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
-         <item>
-          <widget class="QSpinBox" name="spinBox">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sleep time per break in milliseconds.&lt;/p&gt;&lt;p&gt;Slower systems may need a higher delay.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-           <property name="minimum">
-            <number>0</number>
-           </property>
-           <property name="maximum">
-            <number>60000</number>
-           </property>
-           <property name="singleStep">
-            <number>10</number>
-           </property>
-           <property name="value">
-            <number>100</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sleep time per break in milliseconds.&lt;/p&gt;&lt;p&gt;Slower systems may need a higher delay.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="text">
-            <string>Set delays (ms)</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="1" column="0">
-        <widget class="QRadioButton" name="radioButton_2">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the button to start playback.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Use Spacebar to play</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="0">
-        <layout class="QHBoxLayout" name="horizontalLayout_3">
-         <item>
-          <widget class="QPushButton" name="pushButton_4">
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select path to Spotify.exe. (Only works without spaces.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-           <property name="text">
-            <string>Choose path</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLineEdit" name="lineEdit">
-           <property name="toolTip">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected path to the installed Spotify.exe. &lt;br/&gt;Default: %appdata%\Spotify\Spotify.exe&lt;br/&gt;(Only works without spaces.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item row="4" column="0">
-        <widget class="QCheckBox" name="checkBox">
-         <property name="toolTip">
-          <string>Minimises the Spotify window after resuming playback.</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-         </property>
-         <property name="text">
-          <string>Minimise window after restart</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
+      <layout class="QGridLayout" name="gridLayout">
        <item row="0" column="0">
-        <widget class="QCheckBox" name="resumePlaybackCheckBox">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Continue playing music after Spotify restarts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Continue playback after restart</string>
-         </property>
-         <property name="checked">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="0">
-        <widget class="QCheckBox" name="checkBoxGentleClosing">
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The option for soft people. Maintains playback progress and volume and ensures that the tray icons are tidy - at the expense of time. Technically, it uses taskkill without the /f (force) parameter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string>Gentle closing (slow)</string>
-         </property>
-        </widget>
+        <layout class="QVBoxLayout" name="verticalLayout_4">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QCheckBox" name="resumePlaybackCheckBox">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Continue playing music after Spotify restarts.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Continue playback after restart</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton_2">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select the button to start playback.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Use Spacebar to play</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="radioButton">
+             <property name="toolTip">
+              <string>Select the button to start playback.</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Use Media Key to play</string>
+             </property>
+             <property name="checked">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBoxGentleClosing">
+             <property name="toolTip">
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The option for soft people. Maintains playback progress and volume and ensures that the tray icons are tidy - at the expense of time. Technically, it uses taskkill without the /f (force) parameter.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+             </property>
+             <property name="text">
+              <string>Gentle closing (slow)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="checkBox">
+             <property name="toolTip">
+              <string>Minimises the Spotify window after resuming playback.</string>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Minimise window after restart</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QGroupBox" name="groupBoxDelay">
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <widget class="QSpinBox" name="spinBox">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sleep time per break in milliseconds.&lt;/p&gt;&lt;p&gt;Slower systems may need a higher delay.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+                <property name="minimum">
+                 <number>0</number>
+                </property>
+                <property name="maximum">
+                 <number>60000</number>
+                </property>
+                <property name="singleStep">
+                 <number>10</number>
+                </property>
+                <property name="value">
+                 <number>100</number>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLabel" name="label_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Sleep time per break in milliseconds.&lt;/p&gt;&lt;p&gt;Slower systems may need a higher delay.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="text">
+                 <string>Set delays (ms)</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxHotkey">
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_3">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_3">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+                </property>
+                <property name="text">
+                 <string>Hotkey:</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="comboBoxModifier_1">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Ctrl</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Alt</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QComboBox" name="comboBoxModifier_2">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Alt</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Ctrl</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>[None]</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="3">
+               <widget class="QLineEdit" name="lineEditHotkey">
+                <property name="maximumSize">
+                 <size>
+                  <width>22</width>
+                  <height>16777215</height>
+                 </size>
+                </property>
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+                <property name="text">
+                 <string>S</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QGroupBox" name="groupBoxPath">
+             <property name="title">
+              <string/>
+             </property>
+             <layout class="QGridLayout" name="gridLayout_4">
+              <item row="0" column="0">
+               <widget class="QPushButton" name="pushButton_4">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Select path to Spotify.exe. (Only works without spaces.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color: rgb(225, 225, 225);
+color: rgb(0, 0, 0);</string>
+                </property>
+                <property name="text">
+                 <string>Path</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QLineEdit" name="lineEdit">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Selected path to the installed Spotify.exe. &lt;br/&gt;Default: %appdata%\Spotify\Spotify.exe&lt;br/&gt;(Only works without spaces.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
@@ -352,7 +476,7 @@ font: 700 9pt &quot;Arial&quot;;</string>
          <string notr="true">background-color: rgb(225, 225, 225);</string>
         </property>
         <property name="text">
-         <string>Save settings</string>
+         <string>Save 💾</string>
         </property>
        </widget>
       </item>
@@ -378,7 +502,7 @@ font: 700 9pt &quot;Arial&quot;;</string>
          <string notr="true">background-color: rgb(225, 225, 225);</string>
         </property>
         <property name="text">
-         <string>Exit</string>
+         <string>Exit 🗙</string>
         </property>
        </widget>
       </item>
@@ -401,8 +525,8 @@ font: 700 9pt &quot;Arial&quot;;</string>
    <slot>close()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>181</x>
-     <y>332</y>
+     <x>230</x>
+     <y>399</y>
     </hint>
     <hint type="destinationlabel">
      <x>230</x>
