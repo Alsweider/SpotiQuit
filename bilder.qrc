@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/new/bilder">
+        <file>sqicon.bmp</file>
+    </qresource>
+</RCC>

@@ -2,13 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <cstdlib>
 #include <windows.h>
 #include <QProcess>
 #include <QStandardPaths>
 #include <QMessageBox>
-
-
+#include <QSystemTrayIcon>
+#include <QTimer>
+//#include <QMenu>
 
 
 
@@ -32,9 +32,12 @@ public:
     //Zum Speichern der Einstellungen
     void saveSettings();
     void loadSettings();
-
     void addToAutostart();
     void removeFromAutostart();
+
+    //Minimieren mit Systray überschreiben
+    void changeEvent(QEvent *event) override;
+
 
 private slots:
     void on_pushButton_clicked();
@@ -65,14 +68,30 @@ private slots:
 
     void on_comboBoxModifier_2_currentTextChanged(const QString &arg1);
 
+    void on_checkBoxHotkey_stateChanged(int arg1);
+
+    void on_checkBoxMinimizeToTray_stateChanged(int arg1);
+
+    void trayIconActivated(QSystemTrayIcon::ActivationReason reason);
+
+
+
 private:
     Ui::MainWindow *ui;
     bool IsSpotifyOpen();
+    bool IsSpotifyActiveWindow();
     void pfadSetzen();
     void setHotkey();
 
     //Hotkey-Variablen
     int modifier1, modifier2, hotkey;
+
+    //Tray-Icon
+    QSystemTrayIcon *trayIcon;
+    void activateMainWindow();
+    void hideMainWindow();
+
+
 
 };
 #endif // MAINWINDOW_H

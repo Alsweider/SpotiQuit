@@ -3,6 +3,8 @@
 #include <QTime>
 #include <QFileDialog>
 #include <QSettings>
+#include <QTimer>
+
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -12,16 +14,34 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->setupUi(this);
 
+
     //Setze Standardpfad zu Spotify.exe in Textfeld
     pfadSetzen();
 
     //Gespeicherte Einstellungen wiederherstellen
     loadSettings();
 
-    //Minimieren bei Programmstart?
-    if (ui->checkBoxStartMinimised->isChecked()){
+    //Hotkey setzen
+    setHotkey();
+
+    // Initialisiere das Systemtray-Icon
+    trayIcon = new QSystemTrayIcon(QIcon(":/new/bilder/sqicon.bmp"), this);
+    connect(trayIcon, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(trayIconActivated(QSystemTrayIcon::ActivationReason)));
+    trayIcon->setToolTip("Click to open SpotiQuit.");
+
+        //Minimieren bei Programmstart?
+        if (ui->checkBoxStartMinimised->isChecked()){
+        qDebug() << "Show minimised";
         showMinimized();
-    }
+        }
+
+        //Programm beim Start im Systray verstecken
+        if (ui->checkBoxMinimizeToTray->isChecked()){
+            trayIcon->show();
+            //Wir brauchen den Timer, weil sonst fühlt sich der Konstruktor gehetzt.
+            QTimer trayTimer;
+            trayTimer.singleShot(1000, this, SLOT(hide()));
+        }
 }
 
 MainWindow::~MainWindow()
@@ -125,9 +145,11 @@ void MainWindow::on_pushButton_clicked()
 
             //Wenn die Herrschaften es wünschen, Spotify minimieren
             if (ui->checkBox->isChecked()){
-            ShowWindow(spotifyWindow, SW_SHOWMINIMIZED); //aktivieren, minimieren
-            qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Spotify minimised";
-            ui->label->setText("Spotify minimised");
+
+                ShowWindow(spotifyWindow, SW_SHOWMINIMIZED); //aktivieren, minimieren
+                qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Spotify minimised";
+                ui->label->setText("Spotify minimised");
+
             }
 
             ui->label->setText("Ready");
@@ -150,8 +172,12 @@ void MainWindow::on_pushButton_clicked()
 //Vorwärts-Taste
 void MainWindow::on_pushButton_3_clicked()
 {
+     //Prüfung ob Spotify geöffnet und disponiert ist
+     if (IsSpotifyOpen() && IsSpotifyActiveWindow()){
+
     keybd_event(VK_MEDIA_NEXT_TRACK, 0, 0, 0); // Keydown
     keybd_event(VK_MEDIA_NEXT_TRACK, 0, KEYEVENTF_KEYUP, 0); // Keyup
+     }
 }
 
 //Rückwärts-Taste
@@ -245,23 +271,10 @@ void MainWindow::on_pushButton_5_clicked()
         pfadSetzen();
 }
 
-//Tastenkürzel bauen
+//Überschriebenes showEvent (war: Tastenkürzel bauen)
 void MainWindow::showEvent(QShowEvent* event)
 {
         QMainWindow::showEvent(event);
-
-//        modifier1 = MOD_CONTROL;
-//        modifier2 = MOD_ALT;
-//        hotkey = 'S';
-
-//        //Kürzel für den Spotify-Neustart global in Windows registrieren: Strg+Alt+S
-//        //RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, MOD_CONTROL | MOD_ALT, 'S');
-//        RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
-//        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert.";
-
-        //Kürzel auslesen & festlegen
-        setHotkey();
-
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)
@@ -275,7 +288,7 @@ void MainWindow::closeEvent(QCloseEvent* event)
 
 bool MainWindow::nativeEvent(const QByteArray& eventType, void* message, long long* result)
 {
-        qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - nativeEvent aufgerufen";
+        //qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - nativeEvent aufgerufen";
 
         Q_UNUSED(eventType);
 
@@ -317,10 +330,16 @@ void MainWindow::saveSettings() {
         //Minimieren speichern
         settings.setValue("checkBoxStartMinimised", ui->checkBoxStartMinimised->isChecked());
 
+        //Systray speichern
+        settings.setValue("checkBoxMinimizeToTray", ui->checkBoxMinimizeToTray->isChecked());
+
         //Hotkey speichern
         settings.setValue("comboBoxModifier_1", ui->comboBoxModifier_1->currentText());
         settings.setValue("comboBoxModifier_2", ui->comboBoxModifier_2->currentText());
         settings.setValue("lineEditHotkey", ui->lineEditHotkey->text());
+
+        //Hotkey-Checkbox
+        settings.setValue("checkBoxHotkey", ui->checkBoxHotkey->isChecked());
 }
 
 // Einstellungen laden
@@ -397,6 +416,13 @@ void MainWindow::loadSettings() {
             ui->checkBoxStartMinimised->setChecked(false);
         }
 
+        //Systray laden
+        if (settings.contains("checkBoxMinimizeToTray")){
+            ui->checkBoxMinimizeToTray->setChecked(settings.value("checkBoxMinimizeToTray").toBool());
+        } else{
+            ui->checkBoxMinimizeToTray->setChecked(false);
+        }
+
         //Hotkey laden
         //Wenn Hotkey gespeichert ist, Werte laden
         if (settings.contains("comboBoxModifier_1") && settings.contains("comboBoxModifier_2") && settings.contains("lineEditHotkey")){
@@ -408,6 +434,13 @@ void MainWindow::loadSettings() {
             ui->comboBoxModifier_1->setCurrentText("Ctrl");
              ui->comboBoxModifier_2->setCurrentText("Alt");
             ui->lineEditHotkey->setText("S");
+        }
+
+        //Hotkey-Checkbox laden
+        if(settings.contains("checkBoxHotkey")){
+            ui->checkBoxHotkey->setChecked(settings.value("checkBoxHotkey").toBool());
+        } else{
+            ui->checkBoxHotkey->setChecked(true);
         }
 
 }
@@ -454,6 +487,7 @@ void MainWindow::on_pushButtonReset_clicked()
         ui->comboBoxModifier_1->setCurrentText("Ctrl");
         ui->comboBoxModifier_2->setCurrentText("Alt");
         ui->lineEditHotkey->setText("S");
+        ui->checkBoxHotkey->setChecked(true);
 
 
 }
@@ -511,6 +545,10 @@ void MainWindow::on_checkBoxStartMinimised_stateChanged(int arg1)
 
 //Holen wir uns den Kurzbefehl zum Spotify-Neustart
 void MainWindow::setHotkey(){
+
+        //Nur wenn das Kästchen angekreuzt ist
+        if (ui->checkBoxHotkey->isChecked()){
+
         //ersten Modifier auslesen
         if (ui->comboBoxModifier_1->currentText() == "Ctrl"){
              modifier1 = MOD_CONTROL;
@@ -547,27 +585,26 @@ void MainWindow::setHotkey(){
         if (modifier1 != 0 && modifier2 != 0 && hotkey != 0 ){
              RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 | modifier2, hotkey);
              qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << modifier2 << " + " << hotkey;
-             ui->label->setText("Hotkey set");
+
         }
 
         //Wenn nur der erste Modifier und der Hotkey vorhanden sind
         if (modifier1 != 0 && modifier2 == 0 && hotkey != 0){
              RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier1 , hotkey);
              qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << hotkey;
-             ui->label->setText("Hotkey set");
         }
 
         //Wenn nur der zwote Modifier und der Hotkey vorhanden sind
         if (modifier1 == 0 && modifier2 != 0 && hotkey != 0){
         RegisterHotKey(reinterpret_cast<HWND>(this->winId()), 1, modifier2 , hotkey);
         qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel registriert: " << modifier1 << " + " << hotkey;
-        ui->label->setText("Hotkey set");
         }
 
         //Wenn nichts da ist
         if (modifier1 == 0 && modifier2 == 0 && hotkey == 0 ){
             ui->label->setText("Missing key");
             repaint();
+        }
         }
 
 }
@@ -582,16 +619,109 @@ void MainWindow::on_lineEditHotkey_textChanged(const QString &text)
 
         //Hotkey zusammenstückeln
         setHotkey();
+        ui->label->setText("Hotkey set");
 }
 
 void MainWindow::on_comboBoxModifier_1_currentTextChanged(const QString &arg1)
 {
     setHotkey();
+    ui->label->setText("Hotkey set");
 }
 
 
 void MainWindow::on_comboBoxModifier_2_currentTextChanged(const QString &arg1)
 {
     setHotkey();
+    ui->label->setText("Hotkey set");
 }
+
+
+void MainWindow::on_checkBoxHotkey_stateChanged(int arg1)
+{
+    if (ui->checkBoxHotkey->isChecked()){
+             setHotkey();
+             ui->label->setText("Hotkey set");
+             ui->comboBoxModifier_1->setEnabled(true);
+             ui->comboBoxModifier_2->setEnabled(true);
+             ui->lineEditHotkey->setEnabled(true);
+
+    } else {
+             UnregisterHotKey(reinterpret_cast<HWND>(this->winId()), 1);
+             ui->label->setText("Hotkey removed");
+             qDebug() << QTime::currentTime().toString("hh:mm:ss:zzz") + " - Kürzel entfernt.";
+             ui->comboBoxModifier_1->setEnabled(false);
+             ui->comboBoxModifier_2->setEnabled(false);
+             ui->lineEditHotkey->setEnabled(false);
+    }
+
+}
+
+//Prüfen ob Spotify das aktive Fenster ist
+bool MainWindow::IsSpotifyActiveWindow() {
+    QProcess process;
+    process.start("powershell", QStringList() << "-Command" << "(Get-Process | Where-Object { $_.MainWindowTitle -eq 'Spotify' }).MainWindowTitle");
+    process.waitForFinished();
+    QString activeWindowTitle = process.readAllStandardOutput().trimmed();
+    return activeWindowTitle == "Spotify";
+}
+
+//Spotify als aktives Fenster setzen
+void ActivateSpotifyWindow() {
+    HWND spotifyWindow = FindWindow(NULL, L"Spotify"); // Den Fenstertitel entsprechend anpassen
+    if (spotifyWindow != NULL) {
+             ShowWindow(spotifyWindow, SW_RESTORE); // Stellt das Fenster wieder her (falls minimiert)
+             SetActiveWindow(spotifyWindow); // Aktiviert das Fenster, ohne es in den Vordergrund zu holen
+    }
+}
+
+
+void MainWindow::on_checkBoxMinimizeToTray_stateChanged(int arg1)
+{
+    //Systray-Präferenzen automatisch in Einstellungen speichern
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "Alsweider", "SpotiQuit");
+    settings.setValue("checkBoxMinimizeToTray", ui->checkBoxMinimizeToTray->isChecked());
+}
+
+//Systray-Aktion bei Klick auf Icon
+void MainWindow::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+{
+    if (reason == QSystemTrayIcon::Trigger) {
+              activateMainWindow();
+    }
+}
+
+
+void MainWindow::activateMainWindow()
+{
+    this->showNormal();  //Zeige das Hauptfenster wieder im normalen Zustand
+    this->activateWindow();  //Aktiviere das Hauptfenster und bringe es in den Vordergrund
+
+}
+
+
+//Ungenutzt
+void MainWindow::hideMainWindow()
+{
+  trayIcon->show();
+  this->hide();
+}
+
+//Minimieren wird überschrieben mit Systray-Verstecken
+void MainWindow::changeEvent(QEvent *event){
+    if (event->type() == QEvent::WindowStateChange) {
+        // Prüft, ob das Fenster minimiert wird
+        if (this->windowState() & Qt::WindowMinimized) {
+
+            if (ui->checkBoxMinimizeToTray->isChecked()){
+                trayIcon->show();
+                hide();
+            }
+        }
+    }
+    //Ruft die Basisimplementierung auf
+    QMainWindow::changeEvent(event);
+}
+
+
+
 

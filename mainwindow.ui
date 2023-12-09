@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>293</width>
+    <width>299</width>
     <height>469</height>
    </rect>
   </property>
@@ -17,17 +17,60 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.8.0</string>
+   <string>SpotiQuit 0.9.0</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="pda">
-    <normaloff>.</normaloff>.</iconset>
+   <iconset resource="bilder.qrc">
+    <normaloff>:/new/bilder/sqicon.bmp</normaloff>:/new/bilder/sqicon.bmp</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: rgb(15, 37, 35);</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_6">
+    <item row="3" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_4">
+      <item>
+       <widget class="QPushButton" name="pushButtonSaveSettings">
+        <property name="toolTip">
+         <string>Saves settings to a *.ini file in your %appdata% directory.</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(225, 225, 225);</string>
+        </property>
+        <property name="text">
+         <string>Save 💾</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonReset">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset settings to default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(225, 225, 225);</string>
+        </property>
+        <property name="text">
+         <string>Reset ⟲</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButtonExit">
+        <property name="toolTip">
+         <string>Close the programme.</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">background-color: rgb(225, 225, 225);</string>
+        </property>
+        <property name="text">
+         <string>Exit 🗙</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
     <item row="0" column="0">
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="0" column="0">
@@ -136,6 +179,52 @@ font: 700 11pt &quot;Arial&quot;;
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item row="2" column="0">
+     <layout class="QHBoxLayout" name="horizontalLayout_5">
+      <item>
+       <widget class="QCheckBox" name="checkBoxAutostart">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start SpotiQuit automatically with Windows. (Could alert the virus scanner because a registry entry for autorun is created.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Autostart</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxStartMinimised">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimises SpotiQuit to the taskbar upon startup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Start minimised</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="checkBoxMinimizeToTray">
+        <property name="toolTip">
+         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If this checkbox is activated, the programme will be moved to the background when started or minimised and can then be reopened by clicking on an icon in the systray (notification area).&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(216, 184, 49);
+font: 700 9pt &quot;Arial&quot;;</string>
+        </property>
+        <property name="text">
+         <string>Systray</string>
         </property>
        </widget>
       </item>
@@ -308,42 +397,7 @@ background-color: rgb(255,255,255);</string>
               <string/>
              </property>
              <layout class="QGridLayout" name="gridLayout_3">
-              <item row="0" column="0">
-               <widget class="QLabel" name="label_3">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-                </property>
-                <property name="text">
-                 <string>Hotkey:</string>
-                </property>
-               </widget>
-              </item>
-              <item row="0" column="1">
-               <widget class="QComboBox" name="comboBoxModifier_1">
-                <property name="toolTip">
-                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-                </property>
-                <property name="styleSheet">
-                 <string notr="true">color: rgb(0, 0, 0);
-background-color: rgb(255,255,255);</string>
-                </property>
-                <item>
-                 <property name="text">
-                  <string>Ctrl</string>
-                 </property>
-                </item>
-                <item>
-                 <property name="text">
-                  <string>Alt</string>
-                 </property>
-                </item>
-               </widget>
-              </item>
-              <item row="0" column="2">
+              <item row="0" column="3">
                <widget class="QComboBox" name="comboBoxModifier_2">
                 <property name="toolTip">
                  <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
@@ -369,7 +423,41 @@ background-color: rgb(255,255,255);</string>
                 </item>
                </widget>
               </item>
-              <item row="0" column="3">
+              <item row="0" column="0">
+               <widget class="QCheckBox" name="checkBoxHotkey">
+                <property name="toolTip">
+                 <string>Enable hotkey </string>
+                </property>
+                <property name="text">
+                 <string>Hotkey</string>
+                </property>
+                <property name="checked">
+                 <bool>true</bool>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QComboBox" name="comboBoxModifier_1">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choose your key combination to restart Spotify.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">color: rgb(0, 0, 0);
+background-color: rgb(255,255,255);</string>
+                </property>
+                <item>
+                 <property name="text">
+                  <string>Ctrl</string>
+                 </property>
+                </item>
+                <item>
+                 <property name="text">
+                  <string>Alt</string>
+                 </property>
+                </item>
+               </widget>
+              </item>
+              <item row="0" column="5">
                <widget class="QLineEdit" name="lineEditHotkey">
                 <property name="maximumSize">
                  <size>
@@ -386,6 +474,20 @@ background-color: rgb(255,255,255);</string>
                 </property>
                 <property name="text">
                  <string>S</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="4">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;+&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                 </property>
                </widget>
               </item>
@@ -433,81 +535,6 @@ background-color: rgb(255,255,255);</string>
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QCheckBox" name="checkBoxAutostart">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Start SpotiQuit automatically with Windows. (Could alert the virus scanner because a registry entry for autorun is created.)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Autostart</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QCheckBox" name="checkBoxStartMinimised">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Minimises SpotiQuit to the taskbar upon startup.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(216, 184, 49);
-font: 700 9pt &quot;Arial&quot;;</string>
-        </property>
-        <property name="text">
-         <string>Start minimised</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="3" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
-      <item>
-       <widget class="QPushButton" name="pushButtonSaveSettings">
-        <property name="toolTip">
-         <string>Saves settings to a *.ini file in your %appdata% directory.</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(225, 225, 225);</string>
-        </property>
-        <property name="text">
-         <string>Save 💾</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonReset">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Reset settings to default values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(225, 225, 225);</string>
-        </property>
-        <property name="text">
-         <string>Reset ⟲</string>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QPushButton" name="pushButtonExit">
-        <property name="toolTip">
-         <string>Close the programme.</string>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: rgb(225, 225, 225);</string>
-        </property>
-        <property name="text">
-         <string>Exit 🗙</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
    </layout>
   </widget>
  </widget>
@@ -516,7 +543,9 @@ font: 700 9pt &quot;Arial&quot;;</string>
   <tabstop>radioButton_2</tabstop>
   <tabstop>radioButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="bilder.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButtonExit</sender>
