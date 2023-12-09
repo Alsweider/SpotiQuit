@@ -1,9 +1,9 @@
 # SpotiQuit
 Tool to quickly restart Spotify and resume playing music. 
 
-There are times when the music doesn't want to play anymore, for whatever reason. This tool applies the standard technical support solution: "[Have you tried turning it off and on again?](https://www.youtube.com/watch?v=nn2FB1P_Mn8)"
-
 [Download latest release](https://github.com/Alsweider/SpotiQuit/releases/latest)
+
+There are times when the music doesn't want to play anymore, for whatever reason. This tool applies the standard technical support solution: "[Have you tried turning it off and on again?](https://www.youtube.com/watch?v=nn2FB1P_Mn8)"
 
 ![2023-12-09 01_21_23-SpotiQuit 0 9 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/f227a66c-736d-4e83-8bef-bf5067b529fd)
 
