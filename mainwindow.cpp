@@ -42,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
             QTimer trayTimer;
             trayTimer.singleShot(1000, this, SLOT(hide()));
         }
+
+        //Standardtext setzen
+        ui->label->setText("Ready");
 }
 
 MainWindow::~MainWindow()
@@ -275,6 +278,7 @@ void MainWindow::on_pushButton_5_clicked()
 void MainWindow::showEvent(QShowEvent* event)
 {
         QMainWindow::showEvent(event);
+        // setHotkey(); //Brauchen wir das hier?
 }
 
 void MainWindow::closeEvent(QCloseEvent* event)

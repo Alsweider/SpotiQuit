@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>SpotiQuit 0.9.0</string>
+   <string>SpotiQuit 0.9.1</string>
   </property>
   <property name="windowIcon">
    <iconset resource="bilder.qrc">
