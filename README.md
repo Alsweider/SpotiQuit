@@ -5,7 +5,7 @@ There are times when the music doesn't want to play anymore, for whatever reason
 
 [Download latest release](https://github.com/Alsweider/SpotiQuit/releases/latest)
 
-![2023-10-01 22_45_42-SpotiQuit 0 8 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/0de3c9c6-04f7-4376-9fb8-6d42cc4487ce)
+![2023-12-09 01_21_23-SpotiQuit 0 9 0](https://github.com/Alsweider/SpotiQuit/assets/30653982/f227a66c-736d-4e83-8bef-bf5067b529fd)
 
 
 # How-to
